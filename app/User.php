@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'cep', 'phone', 'address', 'cnpj'
     ];
 
     /**
@@ -36,4 +36,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static $rules = ['email' => 'required|min:3'];
+
+    public function __construct($args = []){
+        parent::__construct($args);
+        $this->password = bcrypt($this->password);
+    }
 }
