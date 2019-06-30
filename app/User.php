@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'cep', 'phone', 'address', 'cnpj'
+        'name', 'email', 'password', 'cep', 'phone', 'address', 'cnpj', 'api_token'
     ];
 
     /**
@@ -37,10 +38,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public static $rules = ['email' => 'required|min:3'];
+    public static $rules = [
+        'email' => 'required|min:3|email|unique:users',
+        'password' => 'required|min:3',
+        'cnpj' => 'required|min:14',
+        'cep' => 'required|min:8'
+    ];
 
-    public function __construct($args = []){
-        parent::__construct($args);
-        $this->password = bcrypt($this->password);
+    protected function create(array $data)
+    {
+        $data['password'] = bcrypt($data['password']);
+        $data['api_token'] = Str::random(60);
+        return parent::create($data);
+    }
+
+    public function providers(){
+        return $this->hasMany('App\Provider');
     }
 }
