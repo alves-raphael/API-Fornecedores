@@ -129,4 +129,24 @@ class ProviderTest extends TestCase
         $provider = Provider::find($provider->id);
         $this->assertEquals($provider->name, 'Joseph');
     }
+
+    public function testTotalPayment(){
+        $user = $this->createUser();
+        $provider = Provider::create( [
+            "name" => "Super provider",
+            "email" => "provider@email.com",
+            "monthly_payment" => "500.00",
+            'user_id' => $user->id
+        ]);
+
+        $provider1 = Provider::create( [
+            "name" => "Super provider",
+            "email" => "provider@email.com",
+            "monthly_payment" => "812.30",
+            'user_id' => $user->id
+        ]);
+
+        $response = $this->withHeaders(['Accept' => 'Application/json'])->get("/api/payment/total?api_token={$user->api_token}");
+        $response->assertStatus(200)->assertJson([1312.3]);
+    }
 }
