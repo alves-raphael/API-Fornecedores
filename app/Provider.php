@@ -14,4 +14,10 @@ class Provider extends Model
         'email' => 'required|email',
         'monthly_payment' => 'required|numeric'
     ];
+
+    public function set(array $attrs){
+        foreach($attrs as $key => $input){
+            $this->$key = $input;
+        }
+    }
 }

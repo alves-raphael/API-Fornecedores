@@ -28,8 +28,8 @@ class ProviderTest extends TestCase
             "cnpj"=> "15803436000196"
         ]);
     }
-    public function testProviderRegister()
-    {
+
+    public function testProviderRegister() {
         $user = $this->createUser();
         $response = $this->post('/api/provider', [
             "name" => "Super provider",
@@ -62,18 +62,18 @@ class ProviderTest extends TestCase
         $response->assertStatus(200)->assertJson([
             [
                 "id" => $provider->id,
-                "name" => $provider->name,
-                "email" => $provider->email,
-                "monthly_payment" => $provider->monthly_payment,
+                "name" => "Super provider",
+                "email" => "provider@email.com",
+                "monthly_payment" => "500.00",
                 "user_id" => $provider->user_id,
                 "created_at" => $provider->created_at->format('Y-m-d H:i:s'),
                 "updated_at" => $provider->updated_at->format('Y-m-d H:i:s')
             ],
             [
                 "id" => $provider1->id,
-                "name" => $provider1->name,
-                "email" => $provider1->email,
-                "monthly_payment" => $provider1->monthly_payment,
+                "name" => "Ultra provider",
+                "email" => "ultraprovider@email.com",
+                "monthly_payment" => "812.00",
                 "user_id" => $provider1->user_id,
                 "created_at" => $provider1->created_at->format('Y-m-d H:i:s'),
                 "updated_at" => $provider1->updated_at->format('Y-m-d H:i:s')
@@ -92,7 +92,6 @@ class ProviderTest extends TestCase
     }
 
     public function testAuthentication(){
-        $user = $this->createUser();
         $response = $this->withHeaders(['Accept'=>'application/json'])->post('/api/provider', [
             "name" => "Super provider",
             "email" => "provider@email.com",
@@ -100,5 +99,34 @@ class ProviderTest extends TestCase
         ]);
 
         $response->assertStatus(401)->assertJson(['message' => 'Unauthenticated.']);
+    }
+
+    public function testDelete(){
+        $user = $this->createUser();
+        $provider = Provider::create( [
+            "name" => "Super provider",
+            "email" => "provider@email.com",
+            "monthly_payment" => "500.00",
+            'user_id' => $user->id
+        ]);
+
+        $response = $this->delete("/api/provider?api_token={$user->api_token}&id={$provider->id}");
+        $response->assertStatus(200)->assertJson(['status' => 'Deleted']);
+        $this->assertEquals(null, Provider::find($provider->id));
+    }
+
+    public function testUpdate(){
+        $user = $this->createUser();
+        $provider = Provider::create( [
+            "name" => "Super provider",
+            "email" => "provider@email.com",
+            "monthly_payment" => "500.00",
+            'user_id' => $user->id
+        ]);
+        
+        $response = $this->put("/api/provider?api_token={$user->api_token}&id={$provider->id}&name=Joseph");
+        $response->assertStatus(200)->assertJson(['status' => 'Updated']);
+        $provider = Provider::find($provider->id);
+        $this->assertEquals($provider->name, 'Joseph');
     }
 }
