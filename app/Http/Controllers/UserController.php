@@ -15,10 +15,6 @@ class UserController extends Controller
         return response()->json(['status' => 'Created', 'api_token' => $user->api_token])->setStatusCode(201);
     }
 
-    public function getAll(){
-        return User::all();
-    }
-
     public function refreshToken(Request $request){
         $request->validate(['email' => 'required', 'password' => 'required']);
         $inputs = $request->all();

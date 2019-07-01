@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Provider;
 use App\User;
+use Illuminate\Cache\Repository;
 
 class ProviderController extends Controller
 {

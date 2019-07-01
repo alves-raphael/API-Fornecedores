@@ -14,8 +14,6 @@ use Illuminate\Http\Request;
 */
 Route::group(['middleware' => 'auth:api'], function(){
 
-    Route::get('/users', "UserController@getAll");
-
     Route::post('/provider', 'ProviderController@create');
 
     Route::get('/providers', 'ProviderController@get');

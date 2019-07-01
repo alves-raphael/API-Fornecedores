@@ -20,7 +20,7 @@ class ProviderTest extends TestCase
     public function createUser(){
         return User::create([
             "name"=> "raphael",
-            "email"=> "nobody@email.com.br",
+            "email"=> "nobody".rand(1,100)."@email.com.br",
             'password' => 'secret',
             "address"=> "Rua São Tomé",
             "cep"=> "03676011",
@@ -132,18 +132,26 @@ class ProviderTest extends TestCase
 
     public function testTotalPayment(){
         $user = $this->createUser();
-        $provider = Provider::create( [
+        $user1 = $this->createUser();
+        Provider::create( [
             "name" => "Super provider",
             "email" => "provider@email.com",
             "monthly_payment" => "500.00",
             'user_id' => $user->id
         ]);
 
-        $provider1 = Provider::create( [
+        Provider::create( [
             "name" => "Super provider",
             "email" => "provider@email.com",
             "monthly_payment" => "812.30",
             'user_id' => $user->id
+        ]);
+
+        Provider::create( [
+            "name" => "Super provider",
+            "email" => "provider@email.com",
+            "monthly_payment" => "330.30",
+            'user_id' => $user1->id
         ]);
 
         $response = $this->withHeaders(['Accept' => 'Application/json'])->get("/api/payment/total?api_token={$user->api_token}");
