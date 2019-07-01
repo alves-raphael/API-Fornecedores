@@ -93,7 +93,7 @@ curl -X PUT -H "Accept: application/json"
 /api/provider?api_token=6MFuCRQBCkd7GR9GXIs9eq0gSwVQ4ha4hQjZjJd4E3jM56JrbAysIChYPxwA&name=MegaProvider
 ```
 ## Soma da mensalidade de todos os fornecedores
-Caso queira saber a soma da mensalidade de todos os seu forncedores, basta fazer da seguinte
+Caso queira saber a soma da mensalidade de todos os seu fornecedores, basta fazer da seguinte forma
 
 ```
 curl -X GET -H "Accept: application/json"
