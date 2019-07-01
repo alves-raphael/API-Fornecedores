@@ -42,7 +42,9 @@ class User extends Authenticatable
         'email' => 'required|min:3|email|unique:users',
         'password' => 'required|min:3',
         'cnpj' => 'required|min:14',
-        'cep' => 'required|min:8'
+        'cep' => 'required|min:8',
+        'address' => 'required',
+        'phone' => 'required'
     ];
 
     protected function create(array $data)

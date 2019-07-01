@@ -20,7 +20,7 @@ Em caso de sucesso, será retornado um JSON com o status "Created" e um "api_tok
     "api_token": "6MFuCRQBCkd7GR9GXIs9eq0gSwVQ4ha4hQjZjJd4E3jM56JrbAysIChYPxwA"
 }
 ```
-Em caso de erro de validação, será retornado uma mensagem semelhante a seguinte:
+Em caso de erro de validação, será retornado uma mensagem semelhante a seguinte
 ```JSON
 {
     "message": "The given data was invalid.",
@@ -41,7 +41,7 @@ curl -X POST -H "Accept: application/json"
 -F "api_token=6MFuCRQBCkd7GR9GXIs9eq0gSwVQ4ha4hQjZjJd4E3jM56JrbAysIChYPxwA"
 /api/provider
 ```
-Em caso de sucesso, será recebido uma mensagem semelhante a:
+Em caso de sucesso, será recebido uma mensagem semelhante a
 ```JSON
 {
     "status": "Created"
@@ -84,7 +84,7 @@ Deletar um fornecedor é necessário passar o token e o id do forncedor que dese
 curl -X DELETE -H "Accept: application/json"
 /api/provider?api_token=6MFuCRQBCkd7GR9GXIs9eq0gSwVQ4ha4hQjZjJd4E3jM56JrbAysIChYPxwA&id=1
 ```
-## Atualizar forncedor
+## Atualizar fornecedor
 Para atualizar o fornecedor, é necessário passar o token e o campo que deseja editar com seu respectivo valor, logo em seguida.
 Tudo isso em query string, como feito na hora deletar.
 No exemplo abaixo, eu editei apenas o nome, mas é possível eidtar vários campos de uma vez só.
@@ -96,7 +96,7 @@ curl -X PUT -H "Accept: application/json"
 Caso queira saber a soma da mensalidade de todos os seu forncedores, basta fazer da seguinte
 
 ```
-curl -X PUT -H "Accept: application/json"
+curl -X GET -H "Accept: application/json"
 /api/payment/total?api_token=6MFuCRQBCkd7GR9GXIs9eq0gSwVQ4ha4hQjZjJd4E3jM56JrbAysIChYPxwA
 ```
 Resultado semelhante a
