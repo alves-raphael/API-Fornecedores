@@ -1,4 +1,4 @@
-# API Teste Convenia
+# API Fornecedores
 Todos os envios de dados são por meio de form data ou query string
 
 ## Cadastro de usuário
